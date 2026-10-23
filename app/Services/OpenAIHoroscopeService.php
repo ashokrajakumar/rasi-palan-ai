@@ -92,4 +92,41 @@ This is traditional astrology for entertainment and reflection.
 
         return trim($text);
     }
+
+    public function generateHoroscope(string $prompt): string
+    {
+        $response = \Illuminate\Support\Facades\Http::withToken(
+            config('services.groq.key')
+        )
+            ->timeout(60)
+            ->post('https://api.groq.com/openai/v1/chat/completions', [
+                'model' => config('services.groq.model', 'openai/gpt-oss-20b'),
+                'messages' => [
+                    [
+                        'role' => 'system',
+                        'content' => 'You are a helpful astrology-themed guidance assistant. Follow the requested language and provide respectful, non-guaranteed guidance.',
+                    ],
+                    [
+                        'role' => 'user',
+                        'content' => $prompt,
+                    ],
+                ],
+                'temperature' => 0.7,
+            ]);
+
+        if ($response->failed()) {
+            throw new \RuntimeException(
+                'Groq API error: ' . $response->status() . ' - ' .
+                $response->json('error.message', $response->body())
+            );
+        }
+
+        $content = $response->json('choices.0.message.content');
+
+        if (!is_string($content) || trim($content) === '') {
+            throw new \RuntimeException('Groq API returned an empty response.');
+        }
+
+        return trim($content);
+    }
 }
