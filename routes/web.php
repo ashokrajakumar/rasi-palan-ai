@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HoroscopeController;
 use App\Http\Controllers\CompatibilityController;
+use App\Http\Controllers\AstrologerChatController;
 
 // Home page
 Route::view('/', 'welcome')->name('home');
@@ -36,3 +37,21 @@ Route::get('/compatibility/result/{compatibilityRequest}', [
     CompatibilityController::class,
     'result',
 ])->name('compatibility.result');
+
+
+Route::get('/astrologer-chat', [
+    AstrologerChatController::class,
+    'index',
+])->name('astrologer-chat.index');
+
+Route::post('/astrologer-chat/send', [
+    AstrologerChatController::class,
+    'send',
+])->middleware('throttle:10,1')
+    ->name('astrologer-chat.send');
+
+Route::post('/astrologer-chat/clear', [
+    AstrologerChatController::class,
+    'clear',
+])->name('astrologer-chat.clear');
+

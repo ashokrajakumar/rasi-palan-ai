@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Rasi Palan AI | Daily Horoscope & Compatibility</title>
+    <title>Rasi Palan AI | Horoscope, Compatibility & AI Chat</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -31,6 +31,14 @@
             color: #f3e8ff;
         }
 
+        .navbar .nav-link {
+            transition: color 0.2s ease;
+        }
+
+        .navbar .nav-link:hover {
+            color: #ddd6fe !important;
+        }
+
         .hero {
             padding: 65px 15px 40px;
             text-align: center;
@@ -48,11 +56,12 @@
             padding: 35px 25px;
             height: 100%;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
-            transition: transform 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .feature-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 14px 32px rgba(76, 29, 149, 0.12);
         }
 
         .feature-icon {
@@ -66,11 +75,14 @@
         }
 
         .btn-purple {
+            display: inline-block;
             background: #6d28d9;
             color: white;
             border: none;
             padding: 12px 24px;
             border-radius: 9px;
+            text-decoration: none;
+            transition: background 0.2s ease;
         }
 
         .btn-purple:hover {
@@ -78,11 +90,32 @@
             color: white;
         }
 
+        .feature-description {
+            color: #6b7280;
+            margin-top: 16px;
+            line-height: 1.7;
+        }
+
+        .disclaimer {
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
         footer {
             margin-top: 45px;
             padding: 25px 15px;
             text-align: center;
             color: #666;
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                padding: 45px 15px 30px;
+            }
+
+            .feature-card {
+                padding: 30px 20px;
+            }
         }
     </style>
 </head>
@@ -98,11 +131,13 @@
 
             <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
                 aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="mainNavbar">
                 <ul class="navbar-nav ms-auto">
+
                     <li class="nav-item">
                         <a class="nav-link text-white" href="{{ url('/') }}">
                             Home
@@ -120,6 +155,13 @@
                             ❤️ Compatibility
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{{ route('astrologer-chat.index') }}">
+                            🔮 AI Astrologer
+                        </a>
+                    </li>
+
                 </ul>
             </div>
         </div>
@@ -128,18 +170,20 @@
     <!-- Hero -->
     <section class="hero">
         <div class="container">
+
             <h1>உங்கள் ராசி பலன் ✨</h1>
 
             <h2 class="h4 mt-3">Welcome to Rasi Palan AI</h2>
 
             <p class="lead text-muted mt-3">
-                Discover your daily horoscope and explore
-                love and marriage compatibility.
+                Discover your daily horoscope, explore compatibility
+                and chat with your AI astrologer.
             </p>
 
             <p class="text-muted">
-                Tamil and English horoscope guidance.
+                Astrology-inspired guidance in Tamil and English.
             </p>
+
         </div>
     </section>
 
@@ -148,13 +192,14 @@
         <div class="row g-4 justify-content-center">
 
             <!-- Daily Horoscope -->
-            <div class="col-md-6">
+            <div class="col-md-6 col-lg-4">
                 <div class="feature-card text-center">
+
                     <div class="feature-icon">🌞</div>
 
                     <h3>Daily Horoscope</h3>
 
-                    <p class="text-muted mt-3">
+                    <p class="feature-description">
                         Enter your name, date of birth and Rasi
                         to explore your daily horoscope in Tamil
                         or English.
@@ -163,17 +208,19 @@
                     <a href="{{ route('horoscope.index') }}" class="btn btn-purple mt-3">
                         View Daily Horoscope
                     </a>
+
                 </div>
             </div>
 
             <!-- Love & Marriage Compatibility -->
-            <div class="col-md-6">
+            <div class="col-md-6 col-lg-4">
                 <div class="feature-card text-center">
+
                     <div class="feature-icon">❤️</div>
 
                     <h3>Love & Marriage Compatibility</h3>
 
-                    <p class="text-muted mt-3">
+                    <p class="feature-description">
                         Select two Rasis to explore love and
                         marriage compatibility in Tamil or English.
                     </p>
@@ -181,6 +228,28 @@
                     <a href="{{ route('compatibility.index') }}" class="btn btn-purple mt-3">
                         Check Compatibility
                     </a>
+
+                </div>
+            </div>
+
+            <!-- AI Astrologer Chat -->
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card text-center">
+
+                    <div class="feature-icon">🔮</div>
+
+                    <h3>AI Astrologer Chat</h3>
+
+                    <p class="feature-description">
+                        Ask questions about your career, love,
+                        marriage and life. Get AI-generated
+                        guidance in Tamil or English.
+                    </p>
+
+                    <a href="{{ route('astrologer-chat.index') }}" class="btn btn-purple mt-3">
+                        Chat with AI
+                    </a>
+
                 </div>
             </div>
 
@@ -188,10 +257,11 @@
     </section>
 
     <!-- Disclaimer -->
-    <section class="container text-center">
+    <section class="container text-center disclaimer">
         <p class="small text-muted">
             Astrology-inspired predictions are for entertainment
-            and personal reflection. Results are not guaranteed.
+            and personal reflection. AI responses are not guaranteed
+            and should not replace professional advice.
         </p>
     </section>
 
@@ -199,13 +269,12 @@
     <footer>
         <div class="container">
             <p class="mb-0">
-                © {{ date('Y') }} Rasi Palan AI
+                © {{ date('Y') }} Rasi Palan AI. All rights reserved.
             </p>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
