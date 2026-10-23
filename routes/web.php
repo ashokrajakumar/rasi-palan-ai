@@ -20,17 +20,16 @@ Route::get('/horoscope/result/{horoscopeRequest}', [
 ])
     ->name('horoscope.result');
 
+Route::get('/compatibility', [CompatibilityController::class, 'index'])
+    ->name('compatibility.index');
+
+Route::post('/compatibility/generate', [CompatibilityController::class, 'generate'])
+    ->name('compatibility.generate');
+
+Route::get('/compatibility/result/{compatibilityRequest}', [CompatibilityController::class, 'result'])
+    ->name('compatibility.result');
+
 Route::get('/compatibility', [
-    CompatibilityController::class,
-    'index',
+    App\Http\Controllers\CompatibilityController::class,
+    'index'
 ])->name('compatibility.index');
-
-Route::post('/compatibility/generate', [
-    CompatibilityController::class,
-    'generate',
-])->middleware('throttle:5,1')->name('compatibility.generate');
-
-Route::get('/compatibility/result/{compatibilityRequest}', [
-    CompatibilityController::class,
-    'result',
-])->name('compatibility.result');
